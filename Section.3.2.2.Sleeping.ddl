@@ -20,21 +20,21 @@
 
 (SimpleDomain TestMonarchProactivePlanning)
 (ContextVariable ChildState)
-(ContextVariable SocialContext)
+(ContextVariable OtherChildState)
 
 (Sensor ChildLocation)
 (Sensor OtherChild)
 
-### SOCIAL CONTEXT ##### ##### ##### #####
+######## Other Child States ######### ###### ###### ######
 
 (SimpleOperator
- (Head SocialContext::NoContext())
+ (Head OtherChildState::NoContext())
  (RequiredState req1 OtherChild::None())
  (Constraint Finishes(Head,req1))
 )
 
 (SimpleOperator
- (Head SocialContext::Silent())
+ (Head OtherChildState::Sleeping())
  (RequiredState req1 OtherChild::Sleeping())
  (Constraint Finishes(Head,req1))
 )
@@ -75,12 +75,12 @@
 ### Robot can say 'follow me', but only when:
 ### the ChildState is skippingSchool
 ### when first it moves to bedroom
-### and if there is no specific social context 
+### and if the other child has no particular state
 (SimpleOperator
  (Head RobotInteraction::FollowMe())
  (RequiredState req1 RobotMoveTo::Bedroom())
  (RequiredState req2 ChildState::SkippingSchool())
- (RequiredState req3 SocialContext::NoContext()) 
+ (RequiredState req3 OtherChildState::NoContext()) 
  (Constraint After(Head,req1))
  (Constraint Duration[1500,INF](req1))
 )
@@ -88,12 +88,12 @@
 ### Robot can say 'follow me', but only when:
 ### the ChildState is skippingSchool
 ### when first it moves to bedroom
-### and if THERE IS SPECIFIC SOCIAL CONTEXT
+### and if the other schiled state is: sleeping
 (SimpleOperator
  (Head RobotInteraction::DisplayFollowMe())
  (RequiredState req1 RobotMoveTo::Bedroom())
  (RequiredState req2 ChildState::SkippingSchool())
- (RequiredState req3 SocialContext::Silent())
+ (RequiredState req3 OtherChildState::Sleeping())
  (Constraint After(Head,req1))
  (Constraint Duration[1500,INF](req1))
 )
